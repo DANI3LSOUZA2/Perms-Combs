@@ -2,6 +2,7 @@ from itertools import product
 
 POSICOES = 4
 comb = 0
+old_list = []
 
 
 def permutar(n):
@@ -17,7 +18,11 @@ def permutar(n):
 
     for x in permsTotal:
         for i in x:
-            print(i)
+            if i in old_list:
+                continue
+            else:
+                print(i)
+                old_list.append(i)
 
     print("Total de combinações: {}".format(comb))
     return permsTotal
