@@ -31,6 +31,7 @@ def permutar(n):
                 print(i)
                 old_list.append(i)  # Old_list corresponde às combinações que não se repetem
 
+    converter_list_perms()
     print("Total de combinações: {}".format(comb))
 
     return permsTotal
@@ -38,27 +39,45 @@ def permutar(n):
 
 # Função para mandar as combinações ao arquivo txt
 def converter_list_perms():
-
+    new_list = []
     list_all = show_file('combinacoes.txt')
-
+    cont_comb = 1
     if list_all is None:
-        cont_comb = 1
+        print("O arquivo está vazio, adicione []")
     else:
         for y in list_all:
             cont_comb = y['id']
 
-        print(cont_comb)
+            tupla_comb = tuple(y['comb'])
 
-    for comb in old_list:
-        x = "".join(comb)
+            new_list.append(tupla_comb)
+        for x in old_list:
+            if x not in new_list:
+                new_list.append(x)
+                tupla = tuple(x)
 
-        list_txt = {
-            cont_comb: x
-        }
+                y = "".join(tupla)
 
-        insert_file(list_txt, 'combinacoes.txt')
+                list_txt = {
+                    'id': cont_comb,
+                    'comb': y
+                }
+                cont_comb += 1
+                insert_file(list_txt, 'combinacoes.txt')
+        print(old_list)
 
-        cont_comb += 1
+        for comb in new_list:
+            if comb in old_list:
+                if comb not in new_list:
+                    x = "".join(comb)
+                    cont_comb += 1
+
+                    list_txt = {
+                        'id': cont_comb,
+                        'comb': x
+                    }
+
+                    insert_file(list_txt, 'combinacoes.txt')
 
 
 List_adc = 0
